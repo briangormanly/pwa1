@@ -1,5 +1,5 @@
 self.addEventListener('install', (e) => {
-  console.log('V1 installing…');
+  console.log('V1.1 installing…');
 
   //self.skipWaiting();
 
@@ -22,28 +22,18 @@ self.addEventListener('fetch', (e) => {
   */
 });
 
-self.addEventListener('message', (e) => {
-  console.log('SW Recieved Message! ' + e.data);
 
-  // respond to just the client that sent the Message
-  self.clients.matchAll().then((clients) => {
-
-    clients.forEach((client) => {
-      if(e.source.id == client.id) {
-        client.postMessage("Got your message, thanks!");
-      }
-    })
-  })
-})
-
-self.addEventListener('push', () => {
+self.addEventListener('push', (e) => {
+  console.log('getting a message!');
+  let n = self.registration.showNotification('A notification from the service worker');
+  e.waitUntil(n);
   console.log('Push Received!');
 });
 
-const applicationServerPublicKey = 'BBZolo6sNMCpw3HJ0um997ZYMfULtls4q2fyah7EY3T6EYyKgcQO4tesmHNFKKfbwbS1b4pL7jPLGAdn9BqtOyA';
+//const applicationServerPublicKey = 'BBZolo6sNMCpw3HJ0um997ZYMfULtls4q2fyah7EY3T6EYyKgcQO4tesmHNFKKfbwbS1b4pL7jPLGAdn9BqtOyA';
 
 /* eslint-enable max-len */
-
+/*
 function urlB64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
   const base64 = (base64String + padding)
@@ -58,6 +48,9 @@ function urlB64ToUint8Array(base64String) {
   }
   return outputArray;
 }
+*/
+
+/*
 
 self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.');
@@ -97,3 +90,19 @@ self.addEventListener('pushsubscriptionchange', function(event) {
     })
   );
 });
+
+self.addEventListener('message', (e) => {
+  console.log('SW Recieved Message! ' + e.data);
+
+  // respond to just the client that sent the Message
+  self.clients.matchAll().then((clients) => {
+
+    clients.forEach((client) => {
+      if(e.source.id == client.id) {
+        client.postMessage("Got your message, thanks!");
+      }
+    })
+  })
+})
+
+*/
