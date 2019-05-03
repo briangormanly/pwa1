@@ -65,11 +65,28 @@ function getSubscription(endpoint) {
 
 }
 
+app.get('/clear', function(req, res) {
+  // configure keys
+  console.log('Clearning subscriptions!');
 
-/*
-app.route('/api/game/pace')
-	.get(gameController.getPace)
-	.post(gameController.setPace);
-*/
+  subscriptions = [];
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send('{"Message": "Subscriptions Cleared!"}');
+})
+
+function getSubscription(endpoint) {
+  // find existing subscription
+  for(var i in subscriptions) {
+    if(subscriptions[i].endpoint == endpoint) {
+      return subscriptions[i];
+    }
+  }
+
+  // no existing endpoint, create a new one
+
+}
+
+
 
 app.listen(1337, () => console.log('Marist PWA listening on port 1337!'));
